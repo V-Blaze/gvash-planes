@@ -8,7 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
 import { store, persistor } from './slices/store';
 
-persistor.purge();
+// if you wanna disable the persistor for development you can use: persistor.purge(); here
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
