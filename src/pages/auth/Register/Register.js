@@ -2,56 +2,129 @@
 
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import * as Yup from 'yup';
 import { registerThunk } from '../../../slices/authSlice/authSlice';
 import { setNotice, setAlert } from '../../../slices/appSlice/appSlice';
+import ErrorMessage from '../../../components/messages/ErrorMessage';
 
+const RegisterSchema = Yup.object().shape({
+  name: Yup.string().min(2, 'Name is Too Short!').max(50, 'Name is Too Long!').required('Name is Required'),
+  email: Yup.string().email('Invalid email').required('Email is Required'),
+  password: Yup.string().min(6, 'Password is Too Short!').max(50, 'Password is Too Long!').required('Password is Required'),
+  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
+});
 const Register = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState({});
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(registerThunk({ name, email, password })).then((res) => {
-      if (res.error) {
-        dispatch(setAlert(res.payload));
-      } else {
-        dispatch(setNotice('Register successful'));
-      }
-    });
+    RegisterSchema.validate({
+      email, password, name, confirmPassword,
+    }, { abortEarly: false })
+      .then((res) => {
+        dispatch(registerThunk(res)).then((res) => {
+          if (res.error) {
+            dispatch(setAlert(res.payload));
+          } else {
+            dispatch(setNotice('Register successful'));
+          }
+        });
+      }).catch((err) => {
+        const newErrors = {};
+        err.inner.forEach((error) => {
+          newErrors[error.path] = error.message;
+        });
+        setErrors(newErrors);
+      });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+    <section className="bg-gray-50 dark:bg-gray-900">
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <h1 className="flex font-secondary items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
+          GVASH
+        </h1>
+        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+              Register your account
+            </h1>
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+              <div>
+                <span htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Name</span>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Joe Doe"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  autoComplete="name"
+                />
+                {errors.name && <ErrorMessage message={errors.name} />}
+              </div>
 
-      <input
-        type="password"
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-      <button type="submit">Register</button>
-    </form>
+              <div>
+                <span htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</span>
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="joe@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-gray-50 border focus:outline-none focus:shadow-focus border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  autoComplete="email"
+                />
+                {errors.email && <ErrorMessage message={errors.email} />}
+              </div>
+              <div>
+                <span htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</span>
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="bg-gray-50 border focus:outline-none focus:shadow-focus border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  autoComplete="current-password"
+                />
+                {errors.password && <ErrorMessage message={errors.password} />}
+                {' '}
+
+              </div>
+              <div>
+                <span htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Your Password</span>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="bg-gray-50 border focus:outline-none focus:shadow-focus border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  autoComplete="current-password"
+                />
+                {errors.confirmPassword && <ErrorMessage message={errors.confirmPassword} />}
+              </div>
+              <button type="submit" className="w-full text-white bg-primary hover:bg-hoverPrimary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary">Register</button>
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                Already have an account?
+                {' '}
+                <Link to="/login" className="text-primary hover:text-hoverPrimary hover:underline dark:text-primary-400">Sign in</Link>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
 export default Register;
+
+//

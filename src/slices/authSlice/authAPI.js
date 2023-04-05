@@ -6,7 +6,6 @@ import { loginUser, registerUser } from '../../api/authApi/auth';
 export const loginThunk = createAsyncThunk('/auth/login', async (credentials, { rejectWithValue }) => {
   try {
     const response = await loginUser(credentials);
-
     if (response.status === 200) {
       return { user: response.data, token: response.data.token };
     }
@@ -26,8 +25,8 @@ export const registerThunk = createAsyncThunk('/auth/register', async (userData,
     }
     return rejectWithValue('Registration failed');
   } catch (error) {
-    if (error.response.status === 401) {
-      return rejectWithValue('UserName or Password is incorrect');
+    if (error.response.status === 422) {
+      return rejectWithValue(error.response.data.errors);
     }
     return rejectWithValue(error.message);
   }
