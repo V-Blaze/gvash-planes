@@ -7,7 +7,7 @@ export const loginThunk = createAsyncThunk('/auth/login', async (credentials, { 
   try {
     const response = await loginUser(credentials);
     if (response.status === 200) {
-      return { user: response.data, token: response.data.token };
+      return { user: response?.data?.data?.attributes, token: response?.data?.data?.meta?.token };
     }
     return rejectWithValue('UserName or Password is incorrect');
   } catch (error) {
@@ -21,7 +21,7 @@ export const registerThunk = createAsyncThunk('/auth/register', async (userData,
   try {
     const response = await registerUser(userData);
     if (response.status === 201) {
-      return { user: response.data, token: response.data.token };
+      return { user: response?.data?.data?.attributes, token: response?.data?.data?.meta?.token };
     }
     return rejectWithValue('Registration failed');
   } catch (error) {
