@@ -28,7 +28,7 @@ function App() {
       {alert && <ErrorMessage message={alert} />}
       {notice && <NoticeMessage message={notice} /> }
       <Routes>
-        <Route path="/" element={<h1 className="text-3xl text-red-500 font-bold underline">Gvash planes</h1>} />
+        <Route path="/" element={<HomePage />} />
         {/* guests routes */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />

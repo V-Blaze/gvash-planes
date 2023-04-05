@@ -24,20 +24,25 @@ const authSlice = createSlice({
     token: null,
   },
   reducers: {
+    logout: (state) => ({
+      ...state, isLoggedIn: false, user: null, token: null,
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(loginThunk.fulfilled, (state, action) => ({
       ...state, isLoggedIn: true, user: action.payload.user, token: action.payload.token,
     }));
     builder.addCase(loginThunk.rejected, (state, action) => ({ ...state, error: action.payload }));
-    builder.addCase(registerThunk.fulfilled, (state, action) => ({ ...state, isLoggedIn: true, user: action.payload.user })); // we will not use token here
+    builder.addCase(registerThunk.fulfilled, (state, action) => ({
+      ...state, isLoggedIn: true, user: action.payload.user, token: action.payload.token,
+    })); // we will not use token here
     builder.addCase(registerThunk.rejected, (state, action) => ({ ...state, error: action.payload }));
   },
 });
 // if needed to export thunk
 
 export { loginThunk, registerThunk };
-
+export const { logout } = authSlice.actions;
 const persistedAuthReducer = persistReducer(authPersistConfig, authSlice.reducer);
 
 export default persistedAuthReducer;

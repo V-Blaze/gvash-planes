@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAlert } from '../../slices/appSlice/appSlice';
+import { logout } from '../../slices/authSlice/authSlice';
 import { planesThunk } from '../../slices/planeSlice/planeAPI';
 
 const HomePage = () => {
@@ -17,6 +18,7 @@ const HomePage = () => {
   return (
     <div>
       <h1>Home Page</h1>
+      <button type="button" onClick={() => dispatch(logout())}>Logout</button>
       <ul>
         {planes.map((plane) => (<li key={plane.id}>{plane.id }</li>))}
       </ul>
