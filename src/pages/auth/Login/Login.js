@@ -1,9 +1,10 @@
 // LoginForm.js
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { loginThunk } from '../../../slices/authSlice/authSlice';
 import { setNotice, setAlert, clearAll } from '../../../slices/appSlice/appSlice';
 import ErrorMessage from '../../../components/messages/ErrorMessage';
@@ -18,7 +19,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
-
+  const [showPassword, setShowPassword] = useState(false);
+  const passwordRef = useRef(null);
   // handle app state
 
   useEffect(() => (() => {
@@ -46,6 +48,16 @@ const Login = () => {
       });
       setErrors(newErrors);
     });
+  };
+
+  const showHandler = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+    if (passwordRef.current.type === 'password') {
+      passwordRef.current.type = 'text';
+    } else {
+      passwordRef.current.type = 'password';
+    }
   };
 
   return (
@@ -77,15 +89,23 @@ const Login = () => {
               </div>
               <div>
                 <span htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</span>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="bg-gray-50 border focus:outline-none focus:shadow-focus border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  autoComplete="current-password"
-                />
+                <div className="relative">
+
+                  <input
+                    type="password"
+                    id="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="bg-gray-50 border focus:outline-none focus:shadow-focus border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    autoComplete="current-password"
+                    ref={passwordRef}
+                  />
+
+                  <button type="button" className="absolute right-3 top-3 text-gray-400" onClick={showHandler}>
+                    {showPassword ? (<AiFillEye />) : (<AiFillEyeInvisible />)}
+                  </button>
+                </div>
                 {errors.password && <ErrorMessage message={errors.password} />}
                 {' '}
 
