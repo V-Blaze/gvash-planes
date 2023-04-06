@@ -30,11 +30,11 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginThunk.fulfilled, (state, action) => ({
-      ...state, isLoggedIn: true, user: action.payload.user, token: action.payload.token,
+      ...state, isLoggedIn: true, user: action.payload.user, token: action.payload.token, error: null,
     }));
     builder.addCase(loginThunk.rejected, (state, action) => ({ ...state, error: action.payload }));
     builder.addCase(registerThunk.fulfilled, (state, action) => ({
-      ...state, isLoggedIn: true, user: action.payload.user, token: action.payload.token,
+      ...state, isLoggedIn: true, user: action.payload.user, token: action.payload.token, error: null,
     })); // we will not use token here
     builder.addCase(registerThunk.rejected, (state, action) => ({ ...state, error: action.payload }));
   },
