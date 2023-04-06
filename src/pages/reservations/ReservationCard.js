@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import './ReservationCard.css';
 import { removeReservation } from '../../api/reservationApi/reservation';
 import { clearReservation } from '../../slices/reservationSlice/reservationSlice';
-import { setAlert } from '../../slices/appSlice/appSlice';
+import { setAlert, setNotice } from '../../slices/appSlice/appSlice';
 
 const ReservationCard = ({
   id,
@@ -23,6 +23,7 @@ const ReservationCard = ({
     removeReservation(token, id).then((res) => {
       if (res.status === 204) {
         dispatch(clearReservation(id));
+        dispatch(setNotice('Reservation deleted successfully'));
       } else {
         dispatch(setAlert('Canceling reservation failed!'));
       }
@@ -36,17 +37,19 @@ const ReservationCard = ({
       <p>
         <strong>Start Time: </strong>
         {' '}
-        {startTime}
+        {startTime.slice(0, 10)}
       </p>
       <p>
         <strong>End Time: </strong>
         {' '}
-        {endTime}
+        {endTime.slice(0, 10)}
       </p>
       <p>
         <strong>Duration: </strong>
         {' '}
         {duration}
+        {' '}
+        hours
       </p>
       <button type="button" onClick={handleClick} style={{ filter: removing ? 'blur(5px)' : '' }}>Cancel</button>
     </div>

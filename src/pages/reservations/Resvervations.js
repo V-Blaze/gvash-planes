@@ -9,6 +9,7 @@ export default function Reservations() {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const reservations = useSelector((state) => state.reservation.reservations);
+  const loading = useSelector((state) => state.reservation.loading);
 
   useEffect(() => {
     dispatch(reservationsThunk(token)).then((res) => {
@@ -17,6 +18,10 @@ export default function Reservations() {
       }
     });
   }, [dispatch, token]);
+
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
 
   return (
     <div>
