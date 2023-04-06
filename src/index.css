@@ -25,3 +25,19 @@
     opacity: 1;
   }
 }
+
+.reservation_card {
+  width: 90%;
+  max-width: 250px;
+  height: 300px;
+  border: 1px soild red;
+}
+
+.reservation_card > img {
+  display: block;
+}
+
+.button_action {
+  border: 1px soild red;
+}
+

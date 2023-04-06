@@ -10,6 +10,7 @@ import Register from './pages/auth/Register/Register';
 import ErrorMessage from './components/messages/ErrorMessage';
 import NoticeMessage from './components/messages/NoticeMessage';
 import { clearAll } from './slices/appSlice/appSlice';
+import Reservations from './pages/reservations/Resvervations';
 
 function App() {
   const alert = useSelector((state) => state.app.alert);
@@ -38,6 +39,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           {/* this is the example route and usage you can find how to use it in that component */}
           <Route path="/user" element={<HomePage />} />
+          <Route path="/reservations" element={<Reservations />} />
         </Route>
 
         {/* You can define admin routes here */}
