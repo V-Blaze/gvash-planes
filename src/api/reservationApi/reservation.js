@@ -19,4 +19,4 @@ export const removeReservation = async (token, id) => {
   };
   const response = await axiosInstance.delete(`/api/v1/planes_reservations/${id}`, config);
   return response;
-}
+};

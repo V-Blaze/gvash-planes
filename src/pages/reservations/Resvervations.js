@@ -23,9 +23,16 @@ export default function Reservations() {
       <h1 className="reservations_title">My Reservations</h1>
       <div className="reservation_container">
         {reservations.map((data) => (
-          <ReservationCard key={data.reservation.id} reservation={data.reservation} image_url={data.image_url} />
+          <ReservationCard
+            key={data.reservation.id}
+            id={data.reservation.id}
+            startTime={data.reservation.start_time}
+            endTime={data.reservation.end_time}
+            duration={data.reservation.duration}
+            imageUrl={data.image_url}
+          />
         ))}
       </div>
     </div>
-  )
+  );
 }

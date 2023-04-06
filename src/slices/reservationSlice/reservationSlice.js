@@ -1,5 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { getReservations } from '../../api/reservationApi/reservation';
 
@@ -24,9 +23,12 @@ const reservationSlice = createSlice({
     error: null,
   },
   reducers: {
-    clearReservation: (state, action) => {
-      state.reservations = state.reservations.filter((data) => data.reservation.id !== action.payload)
-    },
+    clearReservation: (state, action) => ({
+      ...state,
+      reservations: state.reservations.filter(
+        (data) => data.reservation.id !== action.payload,
+      ),
+    }),
   },
   extraReducers: (builder) => {
     builder.addCase(reservationsThunk.fulfilled, (state, action) => ({
