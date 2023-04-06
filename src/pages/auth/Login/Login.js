@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { loginThunk } from '../../../slices/authSlice/authSlice';
 import { setNotice, setAlert, clearAll } from '../../../slices/appSlice/appSlice';
-import ErrorMessage from '../../../components/messages/ErrorMessage';
+import SmallErrorMessage from '../../../components/messages/SmallErrorMessage';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Email is required!!'),
@@ -106,7 +106,7 @@ const Login = () => {
                     {showPassword ? (<AiFillEye />) : (<AiFillEyeInvisible />)}
                   </button>
                 </div>
-                {errors.password && <ErrorMessage message={errors.password} />}
+                {errors.password && <SmallErrorMessage message={errors.password} />}
                 {' '}
 
               </div>

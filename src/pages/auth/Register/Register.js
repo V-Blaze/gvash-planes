@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { registerThunk } from '../../../slices/authSlice/authSlice';
 import { setNotice, setAlert } from '../../../slices/appSlice/appSlice';
-import ErrorMessage from '../../../components/messages/ErrorMessage';
+import SmallErrorMessage from '../../../components/messages/SmallErrorMessage';
 
 const RegisterSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Name is Too Short!').max(50, 'Name is Too Long!').required('Name is Required'),
@@ -91,7 +91,7 @@ const Register = () => {
                   className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   autoComplete="name"
                 />
-                {errors.name && <ErrorMessage message={errors.name} />}
+                {errors.name && <SmallErrorMessage message={errors.name} />}
               </div>
 
               <div>
@@ -105,7 +105,7 @@ const Register = () => {
                   className="bg-gray-50 border focus:outline-none focus:shadow-focus border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   autoComplete="email"
                 />
-                {errors.email && <ErrorMessage message={errors.email} />}
+                {errors.email && <SmallErrorMessage message={errors.email} />}
               </div>
               <div>
                 <span htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</span>
@@ -126,7 +126,7 @@ const Register = () => {
                     {showPassword ? (<AiFillEye />) : (<AiFillEyeInvisible />)}
                   </button>
                 </div>
-                {errors.password && <ErrorMessage message={errors.password} />}
+                {errors.password && <SmallErrorMessage message={errors.password} />}
                 {' '}
 
               </div>
@@ -150,7 +150,7 @@ const Register = () => {
                   </button>
                 </div>
 
-                {errors.confirmPassword && <ErrorMessage message={errors.confirmPassword} />}
+                {errors.confirmPassword && <SmallErrorMessage message={errors.confirmPassword} />}
               </div>
               <button type="submit" className="w-full text-white bg-primary hover:bg-hoverPrimary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary">Register</button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">

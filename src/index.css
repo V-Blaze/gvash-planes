@@ -9,6 +9,11 @@
   animation: animateleft 0.5s;
 }
 
+.animate-left-small {
+  position: relative;
+  animation: animateleft 0.5s;
+}
+
 @keyframes animateleft {
   from {
     left: -300px;
