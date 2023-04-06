@@ -25,7 +25,7 @@ export default function Reservations() {
 
   return (
     <div>
-      <h1 className="reservations_title">My Reservations</h1>
+      <h1 className="reservations_title font-secondary">My Reservations</h1>
       <div className="reservation_container">
         {reservations.map((data) => (
           <ReservationCard
