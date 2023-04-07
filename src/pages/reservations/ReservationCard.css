@@ -24,6 +24,11 @@
   display: block;
 }
 
+.reservation_card > h3 {
+  text-align: center;
+  margin: 5px;
+}
+
 .reservation_card p {
   font-size: 12px;
   margin: 5px;

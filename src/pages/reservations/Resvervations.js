@@ -34,6 +34,7 @@ export default function Reservations() {
             startTime={data.reservation.start_time}
             endTime={data.reservation.end_time}
             duration={data.reservation.duration}
+            name={data.name}
             imageUrl={data.image_url}
           />
         ))}

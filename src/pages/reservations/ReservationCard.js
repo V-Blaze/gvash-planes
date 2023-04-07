@@ -12,6 +12,7 @@ const ReservationCard = ({
   startTime,
   endTime,
   duration,
+  name,
   imageUrl,
 }) => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const ReservationCard = ({
   return (
     <div className="reservation_card">
       <img src={imageUrl} alt="plane" width="250" height="200" />
+      <h3 className="font-secondary">{name}</h3>
       <p>
         <strong>Start Time: </strong>
         {' '}
@@ -58,6 +60,7 @@ const ReservationCard = ({
 
 ReservationCard.propTypes = {
   id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   startTime: PropTypes.string.isRequired,
   endTime: PropTypes.string.isRequired,
   duration: PropTypes.number.isRequired,
