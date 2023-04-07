@@ -11,8 +11,13 @@ export const getPlanes = async (token) => {
   return response;
 };
 
-// just for linter you can remove it
+// method to get details on a single plane by id
 export const getPlane = async (token, id) => {
-  const response = await axiosInstance.get(`/api/v1/planes/${id}`);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axiosInstance.get(`/api/v1/planes/${id}`, config);
   return response;
 };
