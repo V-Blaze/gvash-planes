@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 
+// Components
+import FormInput from '../../components/formInput/FormInput';
+
 const AddPlane = () => {
   const planeFormData = {
-    name: 'Boeing 747',
-    plane_type: 'Commercial',
-    description: 'The Boeing 747 is a large, long-range wide-body airliner.',
-    image: 'https://example.com/boeing-747.jpg',
-    price: 1_000_000,
-    model: '747-400',
-    year_of_manufacture: '20-05-2022',
-    life_span: '12:30:00',
-    fees: 1000.0,
+    name: '',
+    plane_type: '',
+    description: '',
+    image: '',
+    price: 0,
+    model: '',
+    year_of_manufacture: '2000-04-06',
+    life_span: '2030-04-06',
+    fees: 0,
   };
   const [planeData, setPlaneData] = useState(planeFormData);
 
   const handleChange = (e) => {
     console.log(planeData, e.target.name);
-    setPlaneData('');
+    setPlaneData({ ...planeData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -33,130 +36,130 @@ const AddPlane = () => {
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleChange}>
               <div>
-                <span htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Plane&apos;s Name
-                </span>
-                <input
+                <FormInput
+                  htmlFor="name"
+                  spanText="Plane&apos;s Name"
                   type="text"
                   id="name"
+                  name="name"
                   placeholder="Enter Plane's name"
                   value={planeData.name}
-                //   onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  handleChange={handleChange}
                   autoComplete="name"
                 />
                 {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
               </div>
 
               <div>
-                <span htmlFor="plane type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Plane Type</span>
-                <input
+                <FormInput
+                  htmlFor="plane type"
+                  spanText="Plane Type"
                   type="text"
                   id="plane_type"
+                  name="plane_type"
                   placeholder="Private"
                   value={planeData.plane_type}
-                //   onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  handleChange={handleChange}
                   autoComplete="plane_type"
                 />
-                {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
               </div>
 
               <div>
                 <span htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Description</span>
                 <textarea
                   id="description"
+                  name="description"
                   placeholder="Plane's description"
                   value={planeData.description}
-                //   onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => handleChange(e)}
                   className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   autoComplete="description"
                 />
-                {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
               </div>
 
               <div>
-                <span htmlFor="image URL" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Image URL</span>
-                <input
+                <FormInput
+                  htmlFor="image URL"
+                  spanText="Enter Image URL"
                   type="text"
+                  name="image"
                   id="image"
                   placeholder="Enter a valid image url"
                   value={planeData.image}
-                //   onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  handleChange={handleChange}
                   autoComplete="imageURL"
                 />
-                {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
               </div>
 
               <div>
-                <span htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Plane Cost Price</span>
-                <input
+                <FormInput
+                  htmlFor="price"
+                  spanText="Enter Plane Cost Price"
                   type="number"
+                  name="price"
                   id="price"
                   placeholder="Enter Price"
                   value={planeData.price}
-                //   onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  handleChange={handleChange}
                   autoComplete="price"
                 />
-                {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
               </div>
 
               <div>
-                <span htmlFor="model" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Plane&apos;s Model</span>
-                <input
+                <FormInput
+                  htmlFor="model"
+                  spanText="Plane&apos;s Model<"
                   type="text"
+                  name="model"
                   id="model"
                   placeholder="Enter plane's model"
                   value={planeData.model}
-                //   onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  handleChange={handleChange}
                   autoComplete="model"
                 />
-                {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
               </div>
 
               <div>
-                <span htmlFor="Y-O-M" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year Of Manufacture</span>
-                <input
+                <FormInput
+                  htmlFor="YOM"
+                  spanText="Year Of Manufacture"
                   type="date"
                   id="date"
+                  name="year_of_manufacture"
                   placeholder="Select date"
                   value={planeData.year_of_manufacture}
-                //   onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  handleChange={handleChange}
                   autoComplete="date"
                 />
-                {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
               </div>
 
               <div>
-                <span htmlFor="life_span" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Life Span</span>
-                <input
+                <FormInput
+                  htmlFor="life_span"
+                  spanText="Life Span"
                   type="date"
                   id="llife_span"
+                  name="life_span"
                   placeholder="Enter Life span"
                   value={planeData.life_span}
-                //   onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  handleChange={handleChange}
                   autoComplete="life_span"
                 />
-                {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
               </div>
 
               <div>
                 <span htmlFor="fee" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fees</span>
-                <input
+                <FormInput
+                  htmlFor="fees"
+                  spanText="Fees"
                   type="number"
                   id="fees"
+                  name="fees"
                   placeholder="Enter Other fees"
                   value={planeData.fees}
-                //   onChange={(e) => setName(e.target.value)}
-                  className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  handleChange={handleChange}
                   autoComplete="fees"
                 />
-                {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
               </div>
 
               <button type="submit" className="w-full text-white bg-primary hover:bg-hoverPrimary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary">Register</button>
