@@ -12,6 +12,7 @@ import Login from './pages/auth/Login/Login';
 import AuthLayout from './pages/auth/Layout/Layout';
 
 // Components
+import AdminRoute from './components/ProtectedRoute/AdminRoute';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ErrorMessage from './components/messages/ErrorMessage';
 import NoticeMessage from './components/messages/NoticeMessage';
@@ -51,7 +52,7 @@ function App() {
 
         {/* You can define admin routes here */}
 
-        <Route element={<ProtectedRoute />}>
+        <Route element={<AdminRoute />}>
           {/* this is the example route and usage you can find how to use it in that component */}
           <Route path="/planes/new" element={<AddPlane />} />
         </Route>

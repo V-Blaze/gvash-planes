@@ -1,41 +1,94 @@
 import React, { useState } from 'react';
+import * as Yup from 'yup';
 
 // Components
 import FormInput from '../../components/formInput/FormInput';
+import SmallErrorMessage from '../../components/messages/SmallErrorMessage';
+
+// Functions
+import isValidImageUrl from '../../utils';
+
+const CreatePlaneSchema = Yup.object().shape({
+  name: Yup.string().min(2, 'Name is Too Short!').max(50, 'Name is Too Long!').required('Name is Required'),
+  planeType: Yup.string().min(2, 'Type is Too Short!').max(50, 'Type is Too Long!').required('Plane type is Required'),
+  description: Yup.string().min(2, 'Name is Too Short!').required('Description is Required'),
+  price: Yup.number().positive().integer().required('Price is required'),
+  model: Yup.string().min(2, 'model is Too Short!').required('Model is Required'),
+  yearOfManufacture: Yup.date().required('Y-O-M is required'),
+  lifeSpan: Yup.string().required('Lifes Span is required'),
+  fees: Yup.number().positive().integer().required('Fee is required'),
+});
 
 const AddPlane = () => {
   const planeFormData = {
     name: '',
-    plane_type: '',
+    planeType: '',
     description: '',
     image: '',
     price: 0,
     model: '',
-    year_of_manufacture: '2000-04-06',
-    life_span: '2030-04-06',
+    yearOfManufacture: '2000-04-06',
+    lifeSpan: '',
     fees: 0,
   };
   const [planeData, setPlaneData] = useState(planeFormData);
+  const [errors, setErrors] = useState({});
+  const [imageError, setImageError] = useState('');
 
   const handleChange = (e) => {
     console.log(planeData, e.target.name);
     setPlaneData({ ...planeData, [e.target.name]: e.target.value });
   };
 
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    setErrors({});
+    setImageError('');
+
+    const {
+      name, planeType, description, price, model, yearOfManufacture, lifeSpan, fees,
+    } = planeData;
+
+    if (isValidImageUrl(planeData.image) !== true) {
+      setImageError('Invalid image url');
+      return;
+    }
+
+    CreatePlaneSchema.validate({
+      name, planeType, description, price, model, yearOfManufacture, lifeSpan, fees,
+    }, { abortEarly: false })
+      .then((res) => {
+        console.log(res);
+        // dispatch(registerThunk(res)).then((res) => {
+        //   if (res.error) {
+        //     dispatch(setAlert(res.payload));
+        //   } else {
+        //     dispatch(setNotice('Register successful'));
+        //   }
+        // });
+      }).catch((err) => {
+        const newErrors = {};
+        err.inner.forEach((error) => {
+          newErrors[error.path] = error.message;
+        });
+        setErrors(newErrors);
+      });
+  };
+
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 mt-[25%]">
+    <section className="bg-gray-50 dark:bg-gray-900 ">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
         <h1 className="flex font-secondary items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
           <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
           GVASH PLANES
         </h1>
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 px-[10%] md:px-[25%] dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create New plane
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleChange}>
-              <div>
+            <form className="space-y-4 md:space-y-6" onSubmit={handelSubmit}>
+              <div className="grid lg:grid-cols-2 gap-2 grid-cols-1">
                 <FormInput
                   htmlFor="name"
                   spanText="Plane&apos;s Name"
@@ -46,21 +99,20 @@ const AddPlane = () => {
                   value={planeData.name}
                   handleChange={handleChange}
                   autoComplete="name"
+                  validateError={errors.name}
                 />
-                {/* {errors.name && <SmallErrorMessage message={errors.name} />} */}
-              </div>
 
-              <div>
                 <FormInput
                   htmlFor="plane type"
                   spanText="Plane Type"
                   type="text"
-                  id="plane_type"
-                  name="plane_type"
+                  id="planeType"
+                  name="planeType"
                   placeholder="Private"
-                  value={planeData.plane_type}
+                  value={planeData.planeType}
                   handleChange={handleChange}
-                  autoComplete="plane_type"
+                  autoComplete="planeType"
+                  validateError={errors.planeType}
                 />
               </div>
 
@@ -75,6 +127,7 @@ const AddPlane = () => {
                   className="bg-gray-50 focus:shadow-focus border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   autoComplete="description"
                 />
+                {errors.description && <SmallErrorMessage message={errors.description} />}
               </div>
 
               <div>
@@ -88,10 +141,11 @@ const AddPlane = () => {
                   value={planeData.image}
                   handleChange={handleChange}
                   autoComplete="imageURL"
+                  validateError={imageError}
                 />
               </div>
 
-              <div>
+              <div className="grid lg:grid-cols-2 gap-2 grid-cols-1">
                 <FormInput
                   htmlFor="price"
                   spanText="Enter Plane Cost Price"
@@ -102,13 +156,12 @@ const AddPlane = () => {
                   value={planeData.price}
                   handleChange={handleChange}
                   autoComplete="price"
+                  validateError={errors.price}
                 />
-              </div>
 
-              <div>
                 <FormInput
                   htmlFor="model"
-                  spanText="Plane&apos;s Model<"
+                  spanText="Plane&apos;s Model"
                   type="text"
                   name="model"
                   id="model"
@@ -116,6 +169,7 @@ const AddPlane = () => {
                   value={planeData.model}
                   handleChange={handleChange}
                   autoComplete="model"
+                  validateError={errors.model}
                 />
               </div>
 
@@ -125,30 +179,29 @@ const AddPlane = () => {
                   spanText="Year Of Manufacture"
                   type="date"
                   id="date"
-                  name="year_of_manufacture"
+                  name="yearOfManufacture"
                   placeholder="Select date"
-                  value={planeData.year_of_manufacture}
+                  value={planeData.yearOfManufacture}
                   handleChange={handleChange}
                   autoComplete="date"
+                  validateError={errors.yearOfManufacture}
                 />
               </div>
 
-              <div>
+              <div className="grid md:grid-cols-2 gap-2 grid-cols-1">
                 <FormInput
-                  htmlFor="life_span"
+                  htmlFor="lifeSpan"
                   spanText="Life Span"
-                  type="date"
-                  id="llife_span"
-                  name="life_span"
-                  placeholder="Enter Life span"
-                  value={planeData.life_span}
+                  type="text"
+                  id="lifeSpan"
+                  name="lifeSpan"
+                  placeholder="Enter Life span e.g 10 years"
+                  value={planeData.lifeSpan}
                   handleChange={handleChange}
-                  autoComplete="life_span"
+                  autoComplete="lifeSpan"
+                  validateError={errors.lifeSpan}
                 />
-              </div>
 
-              <div>
-                <span htmlFor="fee" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fees</span>
                 <FormInput
                   htmlFor="fees"
                   spanText="Fees"
@@ -159,6 +212,7 @@ const AddPlane = () => {
                   value={planeData.fees}
                   handleChange={handleChange}
                   autoComplete="fees"
+                  validateError={errors.fees}
                 />
               </div>
 
