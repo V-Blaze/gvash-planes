@@ -1,34 +1,44 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 // Components
 import FormInput from '../../components/formInput/FormInput';
 import SmallErrorMessage from '../../components/messages/SmallErrorMessage';
+import { setAlert, setNotice } from '../../slices/appSlice/appSlice';
 
 // Functions
-import isValidImageUrl from '../../utils';
+// To be fully implemented later
+// import isValidImageUrl from '../../utils';
+
+// Actions
+import { createPlaneThunk } from '../../slices/planeSlice/planeAPI';
 
 const CreatePlaneSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Name is Too Short!').max(50, 'Name is Too Long!').required('Name is Required'),
-  planeType: Yup.string().min(2, 'Type is Too Short!').max(50, 'Type is Too Long!').required('Plane type is Required'),
+  plane_type: Yup.string().min(2, 'Type is Too Short!').max(50, 'Type is Too Long!').required('Plane type is Required'),
   description: Yup.string().min(2, 'Name is Too Short!').required('Description is Required'),
   price: Yup.number().positive().integer().required('Price is required'),
   model: Yup.string().min(2, 'model is Too Short!').required('Model is Required'),
-  yearOfManufacture: Yup.date().required('Y-O-M is required'),
-  lifeSpan: Yup.string().required('Lifes Span is required'),
+  year_of_manufacture: Yup.date().required('Y-O-M is required'),
+  life_span: Yup.string().required('Lifes Span is required'),
   fees: Yup.number().positive().integer().required('Fee is required'),
 });
 
 const AddPlane = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
   const planeFormData = {
     name: '',
-    planeType: '',
+    plane_type: '',
     description: '',
     image: '',
     price: 0,
     model: '',
-    yearOfManufacture: '2000-04-06',
-    lifeSpan: '',
+    year_of_manufacture: '2000-04-06',
+    life_span: '',
     fees: 0,
   };
   const [planeData, setPlaneData] = useState(planeFormData);
@@ -36,7 +46,6 @@ const AddPlane = () => {
   const [imageError, setImageError] = useState('');
 
   const handleChange = (e) => {
-    console.log(planeData, e.target.name);
     setPlaneData({ ...planeData, [e.target.name]: e.target.value });
   };
 
@@ -46,26 +55,34 @@ const AddPlane = () => {
     setImageError('');
 
     const {
-      name, planeType, description, price, model, yearOfManufacture, lifeSpan, fees,
+      // eslint-disable-next-line camelcase
+      name, plane_type, description, price, model, year_of_manufacture, life_span, fees,
     } = planeData;
 
-    if (isValidImageUrl(planeData.image) !== true) {
-      setImageError('Invalid image url');
-      return;
-    }
+    // To be fully implemented later
 
+    // if (isValidImageUrl(planeData.image) !== true) {
+    //   setImageError('Invalid image url');
+    //   return;
+    // }
     CreatePlaneSchema.validate({
-      name, planeType, description, price, model, yearOfManufacture, lifeSpan, fees,
+      // eslint-disable-next-line camelcase
+      name, plane_type, description, price, model, year_of_manufacture, life_span, fees,
     }, { abortEarly: false })
-      .then((res) => {
-        console.log(res);
-        // dispatch(registerThunk(res)).then((res) => {
-        //   if (res.error) {
-        //     dispatch(setAlert(res.payload));
-        //   } else {
-        //     dispatch(setNotice('Register successful'));
-        //   }
-        // });
+      .then(() => {
+        const data = {
+          planeData,
+          token,
+        };
+
+        dispatch(createPlaneThunk(data)).then((res) => {
+          if (res.error) {
+            dispatch(setAlert(res.payload));
+          } else {
+            dispatch(setNotice('New Plane Created Successfully'));
+            navigate('/');
+          }
+        });
       }).catch((err) => {
         const newErrors = {};
         err.inner.forEach((error) => {
@@ -106,13 +123,13 @@ const AddPlane = () => {
                   htmlFor="plane type"
                   spanText="Plane Type"
                   type="text"
-                  id="planeType"
-                  name="planeType"
+                  id="plane_type"
+                  name="plane_type"
                   placeholder="Private"
-                  value={planeData.planeType}
+                  value={planeData.plane_type}
                   handleChange={handleChange}
-                  autoComplete="planeType"
-                  validateError={errors.planeType}
+                  autoComplete="plane_type"
+                  validateError={errors.plane_type}
                 />
               </div>
 
@@ -179,27 +196,27 @@ const AddPlane = () => {
                   spanText="Year Of Manufacture"
                   type="date"
                   id="date"
-                  name="yearOfManufacture"
+                  name="year_of_manufacture"
                   placeholder="Select date"
-                  value={planeData.yearOfManufacture}
+                  value={planeData.year_of_manufacture}
                   handleChange={handleChange}
                   autoComplete="date"
-                  validateError={errors.yearOfManufacture}
+                  validateError={errors.year_of_manufacture}
                 />
               </div>
 
               <div className="grid md:grid-cols-2 gap-2 grid-cols-1">
                 <FormInput
-                  htmlFor="lifeSpan"
+                  htmlFor="life_span"
                   spanText="Life Span"
                   type="text"
-                  id="lifeSpan"
-                  name="lifeSpan"
+                  id="life_span"
+                  name="life_span"
                   placeholder="Enter Life span e.g 10 years"
-                  value={planeData.lifeSpan}
+                  value={planeData.life_span}
                   handleChange={handleChange}
-                  autoComplete="lifeSpan"
-                  validateError={errors.lifeSpan}
+                  autoComplete="life_span"
+                  validateError={errors.life_span}
                 />
 
                 <FormInput
