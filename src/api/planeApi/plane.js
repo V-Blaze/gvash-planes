@@ -11,7 +11,7 @@ export const getPlanes = async (token) => {
   return response;
 };
 
-// method to get details on a single plane by id
+// Method to get details on a single plane by id
 export const getPlane = async (token, id) => {
   const config = {
     headers: {
