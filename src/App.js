@@ -34,7 +34,7 @@ function App() {
     }
   });
   return (
-    <div className="App font-primary bg-gray-50 relative p-6 pt-40 min-h-screen">
+    <div className="App font-primary">
       {alert && <ErrorMessage message={alert} />}
       {notice && <NoticeMessage message={notice} /> }
       <Routes>
