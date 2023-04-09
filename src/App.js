@@ -25,7 +25,7 @@ function App() {
     }
   });
   return (
-    <div className="App font-primary">
+    <div className="App font-primary sm:text-base text-xs">
       {alert && <ErrorMessage message={alert} />}
       {notice && <NoticeMessage message={notice} /> }
       <Routes>

@@ -1,13 +1,8 @@
 import axiosInstance from '../axios';
 
 // plane methods
-export const getPlanes = async (token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axiosInstance.get('/api/v1/planes', config);
+export const getPlanes = async () => {
+  const response = await axiosInstance.get('/api/v1/planes');
   return response;
 };
 
