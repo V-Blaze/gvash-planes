@@ -11,8 +11,8 @@ import {
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['isLoggedIn', 'token'],
-  blacklist: ['error', 'user'],
+  whitelist: ['isLoggedIn', 'token', 'user'],
+  blacklist: ['error'],
 };
 
 const authSlice = createSlice({
