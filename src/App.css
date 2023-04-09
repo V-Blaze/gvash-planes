@@ -3,10 +3,10 @@ h1 {
 }
 
 :root {
-  --primary-color: #0047AB;
-  --secondary-color: #0047AB;
-  --highlight-color: #00BFFF;
-  --highlight-dark-color: #00BFFF;
+  --primary-color: #0047ab;
+  --secondary-color: #0047ab;
+  --highlight-color: #00bfff;
+  --highlight-dark-color: #00bfff;
 }
 
 .link {
