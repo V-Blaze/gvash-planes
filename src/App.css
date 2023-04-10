@@ -1,3 +1,37 @@
 h1 {
   color: blue;
 }
+
+:root {
+  --primary-color: #0047ab;
+  --secondary-color: #0047ab;
+  --highlight-color: #00bfff;
+  --highlight-dark-color: #00bfff;
+}
+
+.link {
+  color: var(--secondary-color);
+  margin-right: 30px;
+  width: fit-content;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease-in-out;
+  font-style: oblique;
+}
+
+.link:hover {
+  color: var(--highlight-color);
+}
+
+.link::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: var(--highlight-color);
+  transition: width 0.2s ease-in-out;
+}
+
+.link:hover::after {
+  width: 100%;
+}
