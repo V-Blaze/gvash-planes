@@ -37,12 +37,12 @@ function App() {
   });
   return (
     <div className="App font-primary md:grid md:grid-cols-[20%,_75%] gap-[5%] sm:text-base text-xs">
+      {alert && <ErrorMessage message={alert} />}
+      {notice && <NoticeMessage message={notice} /> }
       <div className="hidden md:block">
         <Navbar />
       </div>
       <div>
-        {alert && <ErrorMessage message={alert} />}
-        {notice && <NoticeMessage message={notice} /> }
         <Routes>
           <Route path="/" element={<HomePage />} />
           {/* guests routes */}
