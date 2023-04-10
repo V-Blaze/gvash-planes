@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 // Pages
 import HomePage from './pages/Home/Home';
 import AddPlane from './pages/AddPlane/AddPlane';
+import Reservations from './pages/reservations/Resvervations';
 
 // Auth-Pages
 import Register from './pages/auth/Register/Register';
@@ -16,8 +17,8 @@ import AdminRoute from './components/ProtectedRoute/AdminRoute';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ErrorMessage from './components/messages/ErrorMessage';
 import NoticeMessage from './components/messages/NoticeMessage';
+import Navbar from './components/Navbar/Navbar';
 import { clearAll } from './slices/appSlice/appSlice';
-import Reservations from './pages/reservations/Resvervations';
 
 // Stylesheet
 import './App.css';
@@ -35,33 +36,38 @@ function App() {
     }
   });
   return (
-    <div className="App font-primary sm:text-base text-xs">
-      {alert && <ErrorMessage message={alert} />}
-      {notice && <NoticeMessage message={notice} /> }
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        {/* guests routes */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
-        {/* protected routes aka users routes */}
-        <Route element={<ProtectedRoute />}>
-          {/* this is the example route and usage you can find how to use it in that component */}
-          <Route path="/user" element={<HomePage />} />
-          <Route path="/reservations" element={<Reservations />} />
-        </Route>
+    <div className="App font-primary md:grid md:grid-cols-[20%,_75%] gap-[5%] sm:text-base text-xs">
+      <div className="hidden md:block">
+        <Navbar />
+      </div>
+      <div>
+        {alert && <ErrorMessage message={alert} />}
+        {notice && <NoticeMessage message={notice} /> }
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {/* guests routes */}
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+          {/* protected routes aka users routes */}
+          <Route element={<ProtectedRoute />}>
+            {/* this is the example route and usage you can find how to use it in that component */}
+            <Route path="/user" element={<HomePage />} />
+            <Route path="/reservations" element={<Reservations />} />
+          </Route>
 
-        {/* You can define admin routes here */}
+          {/* You can define admin routes here */}
 
-        <Route element={<AdminRoute />}>
-          {/* this is the example route and usage you can find how to use it in that component */}
-          <Route path="/planes/new" element={<AddPlane />} />
-        </Route>
+          <Route element={<AdminRoute />}>
+            {/* this is the example route and usage you can find how to use it in that component */}
+            <Route path="/planes/new" element={<AddPlane />} />
+          </Route>
 
-        {/* 404 redirect to / */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+          {/* 404 redirect to / */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
 
     </div>
   );
