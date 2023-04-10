@@ -40,7 +40,6 @@ h1 {
   padding: 1rem 0.2rem;
   width: 100%;
   font-weight: bolder;
-
 }
 
 .nav-link:hover {
@@ -48,4 +47,4 @@ h1 {
   color: white;
   border-radius: 0.5rem;
   transition: background-color 0.2s ease-in-out;
- }
+}

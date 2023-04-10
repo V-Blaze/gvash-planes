@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { AiOutlineMenuFold } from 'react-icons/ai';
 
 // React Icons
 import { RiFacebookFill, RiTwitterFill, RiInstagramFill } from 'react-icons/ri';
@@ -8,14 +10,17 @@ import { RiFacebookFill, RiTwitterFill, RiInstagramFill } from 'react-icons/ri';
 // Redux
 import { logout } from '../../slices/authSlice/authSlice';
 
-const Navbar = () => {
+const Navbar = ({ active, setActive }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
   const userID = useSelector((state) => state.auth.user?.id);
 
   return (
-    <nav className=" py-14 sm:px-[2%] px-5 border-r min-h-screen fixed">
+    <nav className={`py-14 sm:px-[2%]  px-5 border-r min-h-screen fixed bg-white z-10 transform transition duration-500 ease-in-out ${!active && 'hidden'} md:block`}>
+      <AiOutlineMenuFold
+        className="absolute top-6 right-4 md:hidden w-6 h-6 cursor-pointer hover:text-primary"
+        onClick={() => setActive(!active)}
+      />
       <div className="mb-16">
         <h1 className="flex justify-center font-secondary items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
           <img className="w-8 h-8 mr-2 pt-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
@@ -83,6 +88,11 @@ const Navbar = () => {
 
     </nav>
   );
+};
+
+Navbar.propTypes = {
+  active: PropTypes.bool.isRequired,
+  setActive: PropTypes.func.isRequired,
 };
 
 export default Navbar;

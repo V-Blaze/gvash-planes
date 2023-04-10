@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
+import { AiOutlineMenuUnfold } from 'react-icons/ai';
 
 // Pages
 import HomePage from './pages/Home/Home';
@@ -24,6 +25,7 @@ import { clearAll } from './slices/appSlice/appSlice';
 import './App.css';
 
 function App() {
+  const [active, setActive] = useState(false);
   const alert = useSelector((state) => state.app.alert);
   const notice = useSelector((state) => state.app.notice);
   const dispatch = useDispatch();
@@ -39,10 +41,17 @@ function App() {
     <div className="App font-primary md:grid md:grid-cols-[20%,_75%] gap-[5%] sm:text-base text-xs">
       {alert && <ErrorMessage message={alert} />}
       {notice && <NoticeMessage message={notice} /> }
-      <div className="hidden md:block">
-        <Navbar />
+      <div className="">
+        <Navbar
+          active={active}
+          setActive={setActive}
+        />
       </div>
       <div>
+        <AiOutlineMenuUnfold
+          className="absolute top-6 left-4 md:hidden w-6 h-6 cursor-pointer hover:text-primary"
+          onClick={() => setActive(!active)}
+        />
         <Routes>
           <Route path="/" element={<HomePage />} />
           {/* guests routes */}
