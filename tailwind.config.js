@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         primary: '#0047AB',
         hoverPrimary: '#00BFFF',
+        secondary: '#475569',
       },
       boxShadow: {
         focus: '0px 0px 20px 1px #00BFFF',
