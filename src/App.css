@@ -42,6 +42,12 @@ h1 {
   font-weight: bolder;
 }
 
+.active-nav-link {
+  background-color: var(--highlight-dark-color);
+  color: white;
+  border-radius: 0.5rem;
+}
+
 .nav-link:hover {
   background-color: var(--secondary-color);
   color: white;

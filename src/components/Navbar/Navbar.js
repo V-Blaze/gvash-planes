@@ -36,25 +36,25 @@ const Navbar = ({ active, setActive }) => {
       </div>
       <div className="flex flex-col w-full justify-cente">
         <div className="flex flex-col justify-center items-start">
-          <Link to="/" className="nav-link" onClick={() => setActive(!active)}>
+          <Link to="/" className={`nav-link ${activeLink === '/' && 'active-nav-link'}`} onClick={() => setActive(!active)}>
             Home
           </Link>
           {isLoggedIn ? (
-            <Link to="/reservations" className="nav-link" onClick={() => setActive(!active)}>
+            <Link to="/reservations" className={`nav-link ${activeLink === '/reservations' && 'active-nav-link'}`} onClick={() => setActive(!active)}>
               Reservations
             </Link>
           ) : (
             <>
-              <Link to="/register" className="nav-link" onClick={() => setActive(!active)}>
+              <Link to="/register" className={`nav-link ${activeLink === '/register' && 'active-nav-link'}`} onClick={() => setActive(!active)}>
                 Register
               </Link>
-              <Link to="/login" className="nav-link" onClick={() => setActive(!active)}>
+              <Link to="/login" className={`nav-link ${activeLink === '/login' && 'active-nav-link'}`} onClick={() => setActive(!active)}>
                 Login
               </Link>
             </>
           )}
           {isLoggedIn && userID === 1 && (
-          <Link to="/planes/new" className="nav-link" onClick={() => setActive(!active)}>
+          <Link to="/planes/new" className={`nav-link ${activeLink === '/planes/new' && 'active-nav-link'}`} onClick={() => setActive(!active)}>
             Create Plane
           </Link>
           )}
