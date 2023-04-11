@@ -38,7 +38,7 @@ function App() {
     }
   });
   return (
-    <div className="App font-primary md:grid md:grid-cols-[20%,_80%] sm:text-base text-xs">
+    <div className="App font-primary mdl:grid mdl:grid-cols-[20%,_80%] md:grid md:grid-cols-[15%,_85%] bg-gray-50 sm:text-base text-xs">
       {alert && <ErrorMessage message={alert} />}
       {notice && <NoticeMessage message={notice} /> }
       <div className="">
@@ -49,7 +49,7 @@ function App() {
       </div>
       <div>
         <AiOutlineMenuUnfold
-          className="absolute top-6 left-4 md:hidden w-6 h-6 cursor-pointer hover:text-primary"
+          className="absolute top-6 left-4 mdl:hidden w-6 h-6 cursor-pointer hover:text-primary"
           onClick={() => setActive(!active)}
         />
         <Routes>

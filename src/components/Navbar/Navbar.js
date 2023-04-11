@@ -22,9 +22,9 @@ const Navbar = ({ active, setActive }) => {
   }, [location]);
 
   return (
-    <nav className={`py-14 sm:px-[2%]  px-5 border-r min-h-screen fixed bg-white z-10 transform transition duration-500 ease-in-out ${!active && 'hidden'} md:block`}>
+    <nav className={`py-14 sm:px-[2%]  px-5 border-r min-h-screen fixed bg-white z-10 transform transition duration-500 ease-in-out ${!active && 'hidden'} mdl:block`}>
       <AiOutlineMenuFold
-        className="absolute top-6 right-4 md:hidden w-6 h-6 cursor-pointer hover:text-primary"
+        className="absolute top-6 right-4 mdl:hidden w-6 h-6 cursor-pointer hover:text-primary"
         onClick={() => setActive(!active)}
       />
       <div className="mb-16">
