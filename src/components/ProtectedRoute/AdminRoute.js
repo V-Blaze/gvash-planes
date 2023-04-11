@@ -8,7 +8,7 @@ const AdminRoute = () => {
   const dispatch = useDispatch();
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const userID = useSelector((state) => state.auth.user.id);
+  const userID = useSelector((state) => state.auth.user?.id);
 
   if (!isLoggedIn || userID !== 1) {
     dispatch(setAlert('You Dont have enough permission to view this page'));
