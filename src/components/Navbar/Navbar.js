@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { AiOutlineMenuFold } from 'react-icons/ai';
 
@@ -11,9 +11,16 @@ import { RiFacebookFill, RiTwitterFill, RiInstagramFill } from 'react-icons/ri';
 import { logout } from '../../slices/authSlice/authSlice';
 
 const Navbar = ({ active, setActive }) => {
+  const [activeLink, setActiveLink] = useState('');
+  const location = useLocation();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const userID = useSelector((state) => state.auth.user?.id);
+
+  useEffect(() => {
+    setActiveLink(location?.pathname);
+    console.log(activeLink);
+  }, [location]);
 
   return (
     <nav className={`py-14 sm:px-[2%]  px-5 border-r min-h-screen fixed bg-white z-10 transform transition duration-500 ease-in-out ${!active && 'hidden'} md:block`}>
@@ -28,30 +35,30 @@ const Navbar = ({ active, setActive }) => {
         </h1>
       </div>
       <div className="flex flex-col w-full justify-cente">
-        <ul className="flex flex-col justify-center items-start">
-          <Link to="/" className="nav-link">
+        <div className="flex flex-col justify-center items-start">
+          <Link to="/" className="nav-link" onClick={() => setActive(!active)}>
             Home
           </Link>
           {isLoggedIn ? (
-            <Link to="/reservations" className="nav-link">
+            <Link to="/reservations" className="nav-link" onClick={() => setActive(!active)}>
               Reservations
             </Link>
           ) : (
             <>
-              <Link to="/register" className="nav-link">
+              <Link to="/register" className="nav-link" onClick={() => setActive(!active)}>
                 Register
               </Link>
-              <Link to="/login" className="nav-link">
+              <Link to="/login" className="nav-link" onClick={() => setActive(!active)}>
                 Login
               </Link>
             </>
           )}
           {isLoggedIn && userID === 1 && (
-          <Link to="/planes/new" className="nav-link">
+          <Link to="/planes/new" className="nav-link" onClick={() => setActive(!active)}>
             Create Plane
           </Link>
           )}
-        </ul>
+        </div>
       </div>
       <div className="flex flex-col items-start absolute bottom-0 gap-3">
         {isLoggedIn && (
