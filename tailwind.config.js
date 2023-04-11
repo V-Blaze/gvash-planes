@@ -15,6 +15,10 @@ module.exports = {
         primary: ['"Roboto Slab"', 'sans-serif'],
         secondary: ['"Alkatra"', 'cursive'],
       },
+      screens: {
+        mdl: '920px',
+        // => @media (min-width: 920px) { ... }
+      },
     },
   },
   plugins: [],
