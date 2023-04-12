@@ -13,6 +13,7 @@ const reservationSchema = yup.object().shape({
 const PlanesReservation = () => {
   const dispatch = useDispatch();
   const planesReservations = useSelector((state) => state.planesReservation.planesReservations);
+  const token = useSelector((state) => state.auth.token);
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -26,15 +27,24 @@ const PlanesReservation = () => {
     e.preventDefault();
     try {
       const dateObj = new Date(date); // Convert date string to Date object
-      await reservationSchema.validate({ date: dateObj, startTime, endTime });
-      const response = await dispatch(addPlaneReservation(date, startTime, endTime, planeID));
-      if (response && response.status === 200) {
-        dispatch(planesReservationsThunk());
-        setDate('');
-        setStartTime('');
-        setEndTime('');
-        setPlaneID('');
-      }
+      reservationSchema.validate({ date: dateObj, startTime, endTime }).then(async () => {
+        console.log(date, startTime, endTime, planeID);
+        const response = await (addPlaneReservation(
+          token,
+          date,
+          startTime,
+          endTime,
+          planeID,
+        ));
+        console.log(response);
+        // if (response && response.status === 200) {
+        //   dispatch(planesReservationsThunk(token));
+        //   setDate('');
+        //   setStartTime('');
+        //   setEndTime('');
+        //   setPlaneID('');
+        // }
+      });
     } catch (error) {
       console.log(error);
     }

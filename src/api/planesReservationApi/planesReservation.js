@@ -11,10 +11,9 @@ export const getPlanesReservations = async (token) => {
   return response;
 };
 
-export const addPlaneReservation = async (token, date, duration, startTime, endTime, planeID) => {
+export const addPlaneReservation = async (token, date, startTime, endTime, planeID) => {
   const planeReservationData = {
     date,
-    duration,
     start_time: startTime,
     end_time: endTime,
     plane_id: planeID,
