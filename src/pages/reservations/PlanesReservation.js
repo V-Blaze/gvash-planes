@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { planesReservationsThunk } from '../../slices/reservationSlice/planesReservationSlice';
@@ -11,13 +12,14 @@ const reservationSchema = yup.object().shape({
 });
 
 const PlanesReservation = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
   const planesReservations = useSelector((state) => state.planesReservation.planesReservations);
   const token = useSelector((state) => state.auth.token);
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
-  const [planeID, setPlaneID] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(planesReservationsThunk());
@@ -28,22 +30,16 @@ const PlanesReservation = () => {
     try {
       const dateObj = new Date(date); // Convert date string to Date object
       reservationSchema.validate({ date: dateObj, startTime, endTime }).then(async () => {
-        console.log(date, startTime, endTime, planeID);
+        console.log(date, startTime, endTime);
         const response = await (addPlaneReservation(
           token,
           date,
           startTime,
           endTime,
-          planeID,
+          id,
         ));
         console.log(response);
-        // if (response && response.status === 200) {
-        //   dispatch(planesReservationsThunk(token));
-        //   setDate('');
-        //   setStartTime('');
-        //   setEndTime('');
-        //   setPlaneID('');
-        // }
+        navigate('/reservations');
       });
     } catch (error) {
       console.log(error);
@@ -64,9 +60,13 @@ const PlanesReservation = () => {
           className="border border-gray-300 p-2 mb-2"
         />
 
-        <input type="time" id="end-time" value={endTime || '00:00'} onChange={(e) => setEndTime(e.target.value)} className="border border-gray-300 p-2 mb-2" />
-        <input type="number" id="planeID" value={planeID} onChange={(e) => setPlaneID(e.target.value)} className="border border-gray-300 p-2 mb-2" />
-
+        <input
+          type="time"
+          id="end-time"
+          value={endTime || '00:00'}
+          onChange={(e) => setEndTime(e.target.value)}
+          className="border border-gray-300 p-2 mb-2"
+        />
         <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Add Reservation
         </button>
