@@ -50,23 +50,36 @@ const PlanesReservation = () => {
     <div className=" flex justify-center items-center flex-col mt-12 gap-8">
       <h1 className=" text-center uppercase m-auto w-fit font-secondary text-xl">Planes Reservations</h1>
       <form onSubmit={handleSubmit} className=" flex justify-center items-center flex-col gap-8">
-        <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} className="border border-gray-300 p-2 mb-2" />
-
-        <input
-          type="time"
-          id="start-time"
-          value={startTime || '00:00'}
-          onChange={(e) => setStartTime(e.target.value)}
-          className="border border-gray-300 p-2 mb-2"
-        />
-
-        <input
-          type="time"
-          id="end-time"
-          value={endTime || '00:00'}
-          onChange={(e) => setEndTime(e.target.value)}
-          className="border border-gray-300 p-2 mb-2"
-        />
+        <label htmlFor="date">
+          Date
+          {' '}
+          <br />
+          <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} className="border border-gray-300 p-2 mb-2" />
+        </label>
+        <label htmlFor="start-time">
+          Start time
+          {' '}
+          <br />
+          <input
+            type="time"
+            id="start-time"
+            value={startTime || '00:00'}
+            onChange={(e) => setStartTime(e.target.value)}
+            className="border border-gray-300 p-2 mb-2"
+          />
+        </label>
+        <label htmlFor="end-time">
+          End time
+          {' '}
+          <br />
+          <input
+            type="time"
+            id="end-time"
+            value={endTime || '00:00'}
+            onChange={(e) => setEndTime(e.target.value)}
+            className="border border-gray-300 p-2 mb-2"
+          />
+        </label>
         <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Add Reservation
         </button>
