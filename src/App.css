@@ -35,3 +35,22 @@ h1 {
 .link:hover::after {
   width: 100%;
 }
+
+.nav-link {
+  padding: 1rem 0.2rem;
+  width: 100%;
+  font-weight: bolder;
+}
+
+.active-nav-link {
+  background-color: var(--highlight-dark-color);
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.nav-link:hover {
+  background-color: var(--secondary-color);
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+}
