@@ -32,6 +32,6 @@ export const removePlane = async (token, id) => {
     },
   };
 
-  const response = await axiosInstance.delete(`/api/v1/planes/${id}`, data, config);
+  const response = await axiosInstance.delete(`/api/v1/planes/${id}`, config);
   return response;
 };

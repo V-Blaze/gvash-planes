@@ -29,8 +29,12 @@ export default function Reservations() {
     <div>
       <h1 className="reservations_title font-secondary">My Reservations</h1>
       <div className="greeting">
-        <h2>Hello {user.name}</h2>
-        {reservations.length ===0 && <p>You have No reservation yet</p>}
+        <h2>
+          Hello
+          {' '}
+          {user.name}
+        </h2>
+        {reservations.length === 0 && <p>You have No reservation yet</p>}
       </div>
       <div className="reservation_container">
         {reservations.map((data) => (
