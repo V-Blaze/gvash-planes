@@ -7,15 +7,22 @@
 
 .reservations_title {
   text-align: center;
-
-  /* margin: 20px; */
+  margin: 20px;
   font-size: 2rem;
+}
+
+.greeting {
+  border: 2px solid rgb(59 130 246 / 0.5);
+  width: 150px;
+  text-align: center;
+  margin: 10px auto;
+  border-radius: 5px;
 }
 
 .reservation_card {
   width: 90%;
   max-width: 250px;
-  height: 320px;
+  height: 350px;
   border: 2px solid rgb(59 130 246 / 0.5);
   border-radius: 5px;
   margin: 5px;
