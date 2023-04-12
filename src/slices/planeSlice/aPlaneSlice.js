@@ -1,27 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { planeThunk } from './planeAPI';
 
-const aPlaneSlice = createSlice({
-  name: 'aplane',
-  initialState: {
-    plane: null,
-    error: null,
-    loading: false,
-  },
-  reducers: {
+const initialState = {
+  planes: [],
+  selectedPlane: null,
+  selectedPlaneStatus: 'idle', // added a new state property for async status
+};
 
+const aPlaneSlice = createSlice({
+  name: 'plane',
+  initialState,
+  reducers: {
+    setPlanes: (state, action) => {
+      state.planes = action.payload;
+    },
+    selectPlane: (state, action) => {
+      const planeId = action.payload;
+      state.selectedPlane = state.planes.find((plane) => plane.id === planeId);
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(planeThunk.pending, (state) => ({
-      ...state, error: null, loading: true
-    }));
-    builder.addCase(planeThunk.fulfilled, (state, action) => ({
-      ...state, plane: action.payload.data, error: null, loading: false,
-    }));
-    builder.addCase(planeThunk.rejected, (state, action) => ({
-      ...state, error: action.payload
-    }));
+    builder
+      .addCase(planeThunk.pending, (state) => {
+        // set the status to loading while fetching data
+        state.selectedPlaneStatus = 'loading';
+      })
+      .addCase(planeThunk.fulfilled, (state, action) => {
+        // set the selected plane and reset the status to 'idle'
+        state.selectedPlane = action.payload;
+        state.selectedPlaneStatus = 'idle';
+      })
+      .addCase(planeThunk.rejected, (state) => {
+        // set the status to 'error' if the request fails
+        state.selectedPlaneStatus = 'error';
+      });
   },
 });
+
+export const { setPlanes, selectPlane } = aPlaneSlice.actions;
 
 export default aPlaneSlice.reducer;
