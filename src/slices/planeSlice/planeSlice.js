@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { planesThunk, planeThunk } from './planeAPI';
+import { planesThunk, planeThunk, createPlaneThunk } from './planeAPI';
 
 const planeSlice = createSlice({
   name: 'plane',
@@ -7,14 +7,26 @@ const planeSlice = createSlice({
     planes: [],
     plane: null,
     error: null,
+    loading: false,
   },
   reducers: {
+    clearplane: (state, action) => ({
+      ...state,
+      planes: state.planes.filter(
+        (data) => data.planes.id !== action.payload,
+      ),
+    }),
   },
   extraReducers: (builder) => {
+    builder.addCase(planesThunk.pending, (state) => ({ ...state, error: null, loading: true }));
     builder.addCase(planesThunk.fulfilled, (state, action) => ({
-      ...state, planes: action.payload.data, error: null,
+      ...state, planes: action.payload.data, error: null, loading: false,
     }));
-    builder.addCase(planesThunk.rejected, (state, action) => ({ ...state, error: action.payload }));
+    builder.addCase(planesThunk.rejected,
+      (state, action) => ({ ...state, error: action.payload, loading: false }));
+    builder.addCase(createPlaneThunk.rejected, (state, action) => ({
+      ...state, error: action.payload, loading: false,
+    }));
     builder.addCase(planeThunk.pending, (state) => ({ ...state, error: null, loading: true }));
     builder.addCase(planeThunk.fulfilled, (state, action) => ({
       ...state, plane: action.payload.data, error: null, loading: false,

@@ -1,18 +1,32 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
+import { AiOutlineMenuUnfold } from 'react-icons/ai';
+
+// Pages
+import HomePage from './pages/Home/Home';
+import AddPlane from './pages/AddPlane/AddPlane';
+import Reservations from './pages/reservations/Resvervations';
+
+// Auth-Pages
+import Register from './pages/auth/Register/Register';
 import Login from './pages/auth/Login/Login';
 import AuthLayout from './pages/auth/Layout/Layout';
+
+// Components
+import AdminRoute from './components/ProtectedRoute/AdminRoute';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import HomePage from './pages/Home/Home';
-import Register from './pages/auth/Register/Register';
 import ErrorMessage from './components/messages/ErrorMessage';
 import NoticeMessage from './components/messages/NoticeMessage';
+import Navbar from './components/Navbar/Navbar';
 import { clearAll } from './slices/appSlice/appSlice';
 import PlaneDetailsPage from './pages/detailsPage/planeDetailsPage';
 
+// Stylesheet
+import './App.css';
+
 function App() {
+  const [active, setActive] = useState(false);
   const alert = useSelector((state) => state.app.alert);
   const notice = useSelector((state) => state.app.notice);
   const dispatch = useDispatch();
@@ -25,29 +39,45 @@ function App() {
     }
   });
   return (
-    <div className="App font-primary">
+    <div className="App font-primary mdl:grid mdl:grid-cols-[20%,_80%] md:grid bg-gray-50 sm:text-base text-xs">
       {alert && <ErrorMessage message={alert} />}
       {notice && <NoticeMessage message={notice} /> }
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        {/* guests routes */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
-        {/* protected routes aka users routes */}
-        <Route element={<ProtectedRoute />}>
-          {/* this is the example route and usage you can find how to use it in that component */}
-          <Route path="/user" element={<HomePage />} />
-          <Route path="/details" element={<PlaneDetailsPage />} />
-        </Route>
+      <div className="">
+        <Navbar
+          active={active}
+          setActive={setActive}
+        />
+      </div>
+      <div>
+        <AiOutlineMenuUnfold
+          className="absolute top-6 left-4 mdl:hidden w-6 h-6 cursor-pointer hover:text-primary"
+          onClick={() => setActive(!active)}
+        />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {/* guests routes */}
+          <Route element={<AuthLayout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+          {/* protected routes aka users routes */}
+          <Route element={<ProtectedRoute />}>
+            {/* this is the example route and usage you can find how to use it in that component */}
+            <Route path="/user" element={<HomePage />} />
+            <Route path="/reservations" element={<Reservations />} />
+          </Route>
 
-        {/* You can define admin routes here */}
+          {/* You can define admin routes here */}
 
-        {/* 404 redirect to / */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+          <Route element={<AdminRoute />}>
+            {/* this is the example route and usage you can find how to use it in that component */}
+            <Route path="/planes/new" element={<AddPlane />} />
+          </Route>
 
+          {/* 404 redirect to / */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
     </div>
   );
 }
