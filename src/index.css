@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@600&family=Roboto+Slab&display=swap');
+
+.animate-left {
+  position: fixed;
+  animation: animateleft 0.5s;
+}
+
+.animate-left-small {
+  position: relative;
+  animation: animateleft 0.5s;
+}
+
+@keyframes animateleft {
+  from {
+    left: -300px;
+    opacity: 0;
+  }
+
+  to {
+    left: 0;
+    opacity: 1;
+  }
+}

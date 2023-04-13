@@ -1,0 +1,71 @@
+h1 {
+  color: blue;
+}
+
+:root {
+  --primary-color: #0047ab;
+  --secondary-color: #0047ab;
+  --highlight-color: #00bfff;
+  --highlight-dark-color: #00bfff;
+}
+
+.link {
+  color: var(--secondary-color);
+  margin-right: 30px;
+  width: fit-content;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease-in-out;
+  font-style: oblique;
+}
+
+.link:hover {
+  color: var(--highlight-color);
+}
+
+.link::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: var(--highlight-color);
+  transition: width 0.2s ease-in-out;
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.nav-link {
+  padding: 1rem 0.2rem;
+  width: 100%;
+  font-weight: bolder;
+}
+
+.active-nav-link {
+  background-color: var(--highlight-dark-color);
+  color: white;
+  border-radius: 0.5rem;
+}
+
+.nav-link:hover {
+  background-color: var(--secondary-color);
+  color: white;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.deleta_plane {
+  border: 2px solid red;
+  color: red;
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: 0.3s;
+}
+
+.deleta_plane:hover {
+  background-color: rgba(255, 0, 0, 0.3);
+}
