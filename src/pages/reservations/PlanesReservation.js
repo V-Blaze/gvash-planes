@@ -17,8 +17,8 @@ const PlanesReservation = () => {
   const planesReservations = useSelector((state) => state.planesReservation.planesReservations);
   const token = useSelector((state) => state.auth.token);
   const [date, setDate] = useState('');
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
+  const [startTime, setStartTime] = useState('00:00');
+  const [endTime, setEndTime] = useState('00:00');
   const navigate = useNavigate();
 
   useEffect(() => {
