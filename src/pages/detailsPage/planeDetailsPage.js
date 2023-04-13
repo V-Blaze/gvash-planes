@@ -22,7 +22,7 @@ const PlaneDetailsPage = () => {
         dispatch(setAlert(res.payload));
       }
     });
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const deletePlane = () => {
     setRemoving(true);
