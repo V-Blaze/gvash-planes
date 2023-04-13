@@ -34,7 +34,7 @@ const PlaneDetailsPage = () => {
         dispatch(setAlert('Deleting plane failed!'));
       }
       setRemoving(false);
-    })
+    });
   };
 
   if (loading) return <Loading />;
@@ -83,8 +83,8 @@ const PlaneDetailsPage = () => {
           </p>
           {isLoggedIn ? (
             <Link className="flex justify-center" to={`/planes_reservations/${id}`}>
-            <button className="text-white bg-primary hover:bg-hoverPrimary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary mt-3" type="button">Reserve</button>
-          </Link>
+              <button className="text-white bg-primary hover:bg-hoverPrimary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary mt-3" type="button">Reserve</button>
+            </Link>
           ) : null}
           {
             isLoggedIn && user.id === 1 ? (
