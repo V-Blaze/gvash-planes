@@ -7,6 +7,14 @@ import { removeReservation } from '../../api/reservationApi/reservation';
 import { clearReservation } from '../../slices/reservationSlice/reservationSlice';
 import { setAlert, setNotice } from '../../slices/appSlice/appSlice';
 
+const changeToReadableTime = (mins) => {
+  const minsInAbsolute = Math.abs(mins);
+  // example => 120 mins => 2 hours, 121 mins => 2 hours
+  const hour = Math.floor(minsInAbsolute / 60);
+  const extraMins = minsInAbsolute % 60; // get extra mins from hour
+  return `${hour} hours, ${extraMins} minutes`;
+};
+
 const ReservationCard = ({
   id,
   startTime,
@@ -48,10 +56,7 @@ const ReservationCard = ({
       </p>
       <p>
         <strong>Duration: </strong>
-        {' '}
-        {duration}
-        {' '}
-        hours
+        {changeToReadableTime(duration)}
       </p>
       <button type="button" onClick={handleClick} style={{ filter: removing ? 'blur(5px)' : '' }}>Cancel</button>
     </div>
