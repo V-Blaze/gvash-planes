@@ -14,7 +14,6 @@ const rootReducer = combineReducers({
   auth: persistedAuthReducer,
   app: appSlice,
   planes: planesSlice,
-  plane: planesSlice,
   reservation: reservationSlice,
 });
 
