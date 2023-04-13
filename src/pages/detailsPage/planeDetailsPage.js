@@ -29,35 +29,35 @@ const PlaneDetailsPage = () => {
         <div className='ml-2'>
           <h1 className="uppercase m-auto w-fit font-secondary text-xl text-black">{plane?.attributes.name}</h1>
           <p className="bg-gray-300">
-            Plane type:
+            <strong>Plane type: </strong>
             {plane?.attributes.plane_type}
           </p>
           <p>
-            Description:
+            <strong>Description: </strong>
             {plane?.attributes.description}
           </p>
           <p className="bg-gray-300">
-            Price:
+            <strong>Price: </strong>
             {plane?.attributes.price}
             {' '}
             $
           </p>
           <p>
-            Model:
+            <strong>Model: </strong>
             {plane?.attributes.model}
             {' '}
           </p>
           <p className="bg-gray-300">
-            Year of manufacture:
+            <strong>Year of manufacture: </strong>
             {plane?.attributes.year_of_manufacture}
           </p>
           <p>
-            Life span:
+            <strong>Life span: </strong>
             {plane?.attributes.life_span.slice(0,10)}
             {' '}
           </p>
           <p className="bg-gray-300">
-            Fees:
+            <strong>Fees: </strong>
             {plane?.attributes.fees}
             {' '}
             $

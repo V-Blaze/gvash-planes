@@ -65,7 +65,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             {/* this is the example route and usage you can find how to use it in that component */}
             <Route path="/user" element={<HomePage />} />
-            <Route path="/:id" element={<PlaneDetailsPage />} />
+            <Route path="plane/:id" element={<PlaneDetailsPage />} />
             <Route path="/reservations" element={<Reservations />} />
           </Route>
 
