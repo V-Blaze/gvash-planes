@@ -26,7 +26,7 @@ import { clearAll } from './slices/appSlice/appSlice';
 // Stylesheet
 import './App.css';
 
-function App() {
+const App = () => {
   const [active, setActive] = useState(false);
   const alert = useSelector((state) => state.app.alert);
   const notice = useSelector((state) => state.app.notice);
@@ -84,6 +84,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
