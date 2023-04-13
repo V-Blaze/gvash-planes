@@ -15,6 +15,7 @@ const ReservationCard = ({
   name,
   imageUrl,
 }) => {
+  console.log(startTime, endTime)
   const dispatch = useDispatch();
   const [removing, setRemoving] = useState(false);
   const token = useSelector((state) => state.auth.token);
@@ -49,7 +50,7 @@ const ReservationCard = ({
       <p>
         <strong>Duration: </strong>
         {' '}
-        {duration}
+        {parseInt(endTime.slice(0, 10)) - parseInt(endTime.slice(0, 10))}
         {' '}
         hours
       </p>

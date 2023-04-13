@@ -30,7 +30,6 @@ const PlanesReservation = () => {
     try {
       const dateObj = new Date(date); // Convert date string to Date object
       reservationSchema.validate({ date: dateObj, startTime, endTime }).then(async () => {
-        console.log(date, startTime, endTime);
         const response = await (addPlaneReservation(
           token,
           date,
@@ -38,7 +37,6 @@ const PlanesReservation = () => {
           endTime,
           id,
         ));
-        console.log(response);
         navigate('/reservations');
       });
     } catch (error) {
