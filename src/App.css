@@ -54,3 +54,18 @@ h1 {
   border-radius: 0.5rem;
   transition: background-color 0.2s ease-in-out;
 }
+
+.deleta_plane {
+  border: 2px solid red;
+  color: red;
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: 0.3s;
+}
+
+.deleta_plane:hover {
+  background-color: rgba(255, 0, 0, 0.3);
+}

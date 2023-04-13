@@ -10,12 +10,6 @@ const planeSlice = createSlice({
     loading: false,
   },
   reducers: {
-    clearplane: (state, action) => ({
-      ...state,
-      planes: state.planes.filter(
-        (data) => data.planes.id !== action.payload,
-      ),
-    }),
   },
   extraReducers: (builder) => {
     builder.addCase(planesThunk.pending, (state) => ({ ...state, error: null, loading: true }));

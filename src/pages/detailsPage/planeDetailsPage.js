@@ -1,14 +1,20 @@
-import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAlert } from '../../slices/appSlice/appSlice';
+import { setAlert, setNotice } from '../../slices/appSlice/appSlice';
 import { planeThunk } from '../../slices/planeSlice/planeAPI';
 import Loading from '../../components/Loading/Loading';
+import { removePlane } from '../../api/planeApi/plane';
 
 const PlaneDetailsPage = () => {
+  const [removing, setRemoving] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const plane = useSelector((state) => state.planes.plane);
   const loading = useSelector((state) => state.planes.loading);
+  const user = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const token = useSelector((state) => state.auth.token);
   const { id } = useParams();
   useEffect(() => {
     dispatch(planeThunk(id)).then((res) => {
@@ -16,7 +22,21 @@ const PlaneDetailsPage = () => {
         dispatch(setAlert(res.payload));
       }
     });
-  }, [dispatch]);
+  }, [dispatch, id]);
+
+  const deletePlane = () => {
+    setRemoving(true);
+    removePlane(token, id).then((res) => {
+      if (res.status === 204) {
+        dispatch(setNotice('Plane deleted successfully'));
+        navigate('/');
+      } else {
+        dispatch(setAlert('Deleting plane failed!'));
+      }
+      setRemoving(false);
+    });
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -61,9 +81,18 @@ const PlaneDetailsPage = () => {
             {' '}
             $
           </p>
-          <Link className="flex justify-center" to={`/planes_reservations/${plane?.id}`}>
-            <button className="text-white bg-primary hover:bg-hoverPrimary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary mt-3" type="button">Reserve</button>
-          </Link>
+          {isLoggedIn ? (
+            <Link className="flex justify-center" to={`/planes_reservations/${id}`}>
+              <button className="text-white bg-primary hover:bg-hoverPrimary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary mt-3" type="button">Reserve</button>
+            </Link>
+          ) : null}
+          {
+            isLoggedIn && user.id === 1 ? (
+              <button onClick={deletePlane} className="deleta_plane" type="button" style={{ filter: removing ? 'blur(5px)' : '' }}>
+                Delete plane
+              </button>
+            ) : null
+          }
         </div>
       </div>
     </div>
