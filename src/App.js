@@ -7,6 +7,7 @@ import { AiOutlineMenuUnfold } from 'react-icons/ai';
 import HomePage from './pages/Home/Home';
 import AddPlane from './pages/AddPlane/AddPlane';
 import Reservations from './pages/reservations/Resvervations';
+import PlanesReservations from './pages/reservations/PlanesReservation';
 
 // Auth-Pages
 import Register from './pages/auth/Register/Register';
@@ -64,6 +65,7 @@ function App() {
             {/* this is the example route and usage you can find how to use it in that component */}
             <Route path="/user" element={<HomePage />} />
             <Route path="/reservations" element={<Reservations />} />
+            <Route path="/planes_reservations/:id" element={<PlanesReservations />} />
           </Route>
 
           {/* You can define admin routes here */}

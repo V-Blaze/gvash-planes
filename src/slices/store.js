@@ -6,6 +6,7 @@ import persistedAuthReducer from './authSlice/authSlice';
 import appSlice from './appSlice/appSlice';
 import planesSlice from './planeSlice/planeSlice';
 import reservationSlice from './reservationSlice/reservationSlice';
+import planesReservationSlice from './reservationSlice/planesReservationSlice';
 
 const middleWares = [logger, thunk];
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   app: appSlice,
   planes: planesSlice,
   reservation: reservationSlice,
+  planesReservation: planesReservationSlice,
 });
 const store = configureStore({
   reducer: rootReducer,
