@@ -37,6 +37,7 @@ const PlanesReservation = () => {
           endTime,
           id,
         ));
+        console.log(response);
         navigate('/reservations');
       });
     } catch (error) {
