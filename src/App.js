@@ -5,6 +5,7 @@ import { AiOutlineMenuUnfold } from 'react-icons/ai';
 
 // Pages
 import HomePage from './pages/Home/Home';
+import PlaneDetailsPage from './pages/detailsPage/planeDetailsPage';
 import AddPlane from './pages/AddPlane/AddPlane';
 import Reservations from './pages/reservations/Resvervations';
 import PlanesReservations from './pages/reservations/PlanesReservation';
@@ -55,6 +56,7 @@ function App() {
         />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/:id" element={<PlaneDetailsPage />} />
           {/* guests routes */}
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
@@ -64,6 +66,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             {/* this is the example route and usage you can find how to use it in that component */}
             <Route path="/user" element={<HomePage />} />
+            <Route path="plane/:id" element={<PlaneDetailsPage />} />
             <Route path="/reservations" element={<Reservations />} />
             <Route path="/planes_reservations/:id" element={<PlanesReservations />} />
           </Route>
@@ -79,7 +82,6 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
-
     </div>
   );
 }

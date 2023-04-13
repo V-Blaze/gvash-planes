@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { planesThunk, createPlaneThunk } from './planeAPI';
+import { planesThunk, planeThunk, createPlaneThunk } from './planeAPI';
 
 const planeSlice = createSlice({
   name: 'plane',
@@ -27,6 +27,12 @@ const planeSlice = createSlice({
     builder.addCase(createPlaneThunk.rejected, (state, action) => ({
       ...state, error: action.payload, loading: false,
     }));
+    builder.addCase(planeThunk.pending, (state) => ({ ...state, error: null, loading: true }));
+    builder.addCase(planeThunk.fulfilled, (state, action) => ({
+      ...state, plane: action.payload.data, error: null, loading: false,
+    }));
+    builder.addCase(planeThunk.rejected,
+      (state, action) => ({ ...state, error: action.payload, loading: false }));
   },
 });
 

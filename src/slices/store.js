@@ -5,6 +5,7 @@ import logger from 'redux-logger';
 import persistedAuthReducer from './authSlice/authSlice';
 import appSlice from './appSlice/appSlice';
 import planesSlice from './planeSlice/planeSlice';
+// import planeSlice from './planeSlice/planeSlice';
 import reservationSlice from './reservationSlice/reservationSlice';
 import planesReservationSlice from './reservationSlice/planesReservationSlice';
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   reservation: reservationSlice,
   planesReservation: planesReservationSlice,
 });
+
 const store = configureStore({
   reducer: rootReducer,
   middleware: middleWares,

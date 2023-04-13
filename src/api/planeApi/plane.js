@@ -6,8 +6,8 @@ export const getPlanes = async () => {
   return response;
 };
 
-// just for linter you can remove it
-export const getPlane = async (token, id) => {
+// Method to get details on a single plane by id
+export const getPlane = async (id) => {
   const response = await axiosInstance.get(`/api/v1/planes/${id}`);
   return response;
 };
