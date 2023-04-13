@@ -7,13 +7,8 @@ export const getPlanes = async () => {
 };
 
 // Method to get details on a single plane by id
-export const getPlane = async (token, id) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  const response = await axiosInstance.get(`/api/v1/planes/${id}`, config);
+export const getPlane = async (id) => {
+  const response = await axiosInstance.get(`/api/v1/planes/${id}`);
   return response;
 };
 

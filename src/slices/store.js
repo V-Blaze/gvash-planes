@@ -5,7 +5,7 @@ import logger from 'redux-logger';
 import persistedAuthReducer from './authSlice/authSlice';
 import appSlice from './appSlice/appSlice';
 import planesSlice from './planeSlice/planeSlice';
-import planeSlice from './planeSlice/planeSlice';
+// import planeSlice from './planeSlice/planeSlice';
 import reservationSlice from './reservationSlice/reservationSlice';
 
 const middleWares = [logger, thunk];
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   auth: persistedAuthReducer,
   app: appSlice,
   planes: planesSlice,
-  plane: planeSlice,
+  plane: planesSlice,
   reservation: reservationSlice,
 });
 

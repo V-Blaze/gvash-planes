@@ -15,18 +15,12 @@ export const planesThunk = createAsyncThunk('/planes', async (token, { rejectWit
 });
 
 export const planeThunk = createAsyncThunk(
-  'planes/fetchById',async (token, { rejectWithValue }) => {
-  try {
-    const response = await getPlane(token, id);
-
-    if (response.status === 200) {
-      return response.data;
-    }
-    return rejectWithValue('Plane fetching failed');
-  } catch (error) {
-    return rejectWithValue(error.message);
-  }
-});
+  'planes/fetchById',
+  async (id) => {
+    const response = await getPlane(id);
+    return response.data;
+  },
+);
 
 export const createPlaneThunk = createAsyncThunk('/planes/new', async (data, { rejectWithValue }) => {
   const { planeData, token } = data;

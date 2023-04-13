@@ -20,7 +20,6 @@ import ErrorMessage from './components/messages/ErrorMessage';
 import NoticeMessage from './components/messages/NoticeMessage';
 import Navbar from './components/Navbar/Navbar';
 import { clearAll } from './slices/appSlice/appSlice';
-import PlaneDetailsPage from './pages/detailsPage/planeDetailsPage';
 
 // Stylesheet
 import './App.css';
